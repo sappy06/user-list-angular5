@@ -1,0 +1,45 @@
+<div class="container left">
+	<div>
+		<h2>Users</h2>
+		<p>If you want to get contact information to specific user just select group and then select him/her from the list below</p>
+		<div>
+			<h3 class="user-group-dd">Select group of users:</h3>
+			<select (change)="selectChangeHandler($event)">
+				<option selected="" value="">-- Select --</option>
+				<option *ngFor="let c of usergroups">{{c}}</option>
+			</select>
+		</div>
+		<p><b><span>You selected: </span></b>{{selectedGroup}}</p>
+	</div>
+	<div class="grid-container">
+		<div *ngFor="let post of users | filter : selectedGroup">
+		  	<div class="grid-item list-div" (click)="renderDetail($event, post)">
+				<img src="{{post['picture'].thumbnail}}" alt="thumbnail" class="img-list"/>
+				<p class="capitalize">{{post['name'].first}}&nbsp;{{post['name'].last}}</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-right right" *ngIf="isDetailLoaded">
+	<div style="width: 100%;">
+		<img class="bg-image right" src="{{user['picture'].large}}" style="width: 100%;height: 60%;"/>
+	</div>
+  	<div class="text-block">
+    	<img class="img-list img-detail" src="{{user['picture'].medium}}"/>
+    	<br>
+    	<span class="capitalize">{{user['name'].first}}</span>&nbsp;<span class="capitalize">{{user['name'].last}}</span>
+    	<br><span>{{user.gender}}</span><span>, {{user['dob'].age}}</span>
+  	</div>
+ </div>
+ <div class="container-right container-text right" *ngIf="isDetailLoaded">
+	<p class="p-margin-label">Email: </p>
+	<p class="p-margin-text">{{user.email}}</p>
+	<p class="p-margin-label">Phone Number: </p>
+	<p class="p-margin-text">{{user.cell}}</p>
+	<p class="p-margin-label">Location: </p>
+	<p class="p-margin-text">{{user['location'].street}}&nbsp;{{user['location'].city}}&nbsp;{{user['location'].state}}&nbsp;{{user['location'].postcode}}</p>
+	<p class="p-margin-label">Nationality: </p>
+	<p class="p-margin-text">{{user.nat}}</p>
+ </div>
+
+
